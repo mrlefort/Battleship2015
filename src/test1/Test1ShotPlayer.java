@@ -14,9 +14,6 @@ import java.util.Collections;
 import java.util.Random;
 import tournament.impl.Participant;
 import tournament.impl.ParticipantInfo;
-import tournament.player.PlayerFactory;
-import tournament.player.PlayerInfo;
-
 
 /**
  *
@@ -53,7 +50,7 @@ public class Test1ShotPlayer implements BattleshipsPlayer {
     public Test1ShotPlayer() {
 
     }
-    
+
     @Override
     public void startMatch(int rounds) {
         lastShot = null;
@@ -167,8 +164,6 @@ public class Test1ShotPlayer implements BattleshipsPlayer {
         }
     }
 
-    
-    
     @Override
     public void incoming(Position pos) {
 
@@ -178,14 +173,10 @@ public class Test1ShotPlayer implements BattleshipsPlayer {
     public void fillShootArrays() {
         //Fills an array with every coordinate
 
-        //deleting this later
-//        sizeX = 10;
-//        sizeY = 10;
+        firePos1 = new ArrayList<>(100);
 
-        firePos1 = new ArrayList<>(sizeX * sizeY);
-
-        for (int x = 0; x < 9; x++) {
-            for (int y = 0; y < 9; y++) {
+        for (int x = 0; x < 10; x++) {
+            for (int y = 0; y < 10; y++) {
                 firePos2.add(new Position(x, y));
                 notYetShot.add(new Position(x, y));
 
@@ -193,11 +184,11 @@ public class Test1ShotPlayer implements BattleshipsPlayer {
         }
         Collections.shuffle(firePos1);
 
-        for (int x = 2; x < 8; x++) {
-            for (int y = 2; y < 8; y++) {
-                firePos1.add(new Position(x, y));
-                firePos2.remove(new Position(x, y));
-                notYetShot.add(new Position(x, y));
+        for (int i = 2; i < 8; i++) {
+            for (int k = 2; k < 8; k++) {
+                firePos1.add(new Position(i, k));
+                firePos2.remove(new Position(i, k));
+                notYetShot.add(new Position(i, k));
 
             }
         }
@@ -205,15 +196,9 @@ public class Test1ShotPlayer implements BattleshipsPlayer {
 
     }
 
-    
-    
-    
-    
-    
-    
     @Override
     public Position getFireCoordinates(Fleet enemyShips) {
-        
+
         fillShootArrays();
 
         if (hunter != null) {
@@ -226,13 +211,12 @@ public class Test1ShotPlayer implements BattleshipsPlayer {
         } else {
 
             
-            
             if (whereToStart == true) {
                 whichArrayToUse = true;
             }
 
             //First shoots from firePos1 then afterwards firePos2
-            if (whichArrayToUse == false) {
+            while (whichArrayToUse == false) {
                 shot = firePos1.get(shotIndex);
                 shotIndex++;
 
@@ -242,16 +226,14 @@ public class Test1ShotPlayer implements BattleshipsPlayer {
 
                 }
 
-            } else {
+            }
 
-                shot = firePos2.get(shotIndex);
-                shotIndex++;
+            shot = firePos2.get(shotIndex);
+            shotIndex++;
 
-                if (shotIndex == firePos2.size()) {
-                    shotIndex = 0;
-                    whichArrayToUse = false;
-
-                }
+            if (shotIndex == firePos2.size()) {
+                shotIndex = 0;
+                whichArrayToUse = false;
 
             }
 
@@ -276,49 +258,44 @@ public class Test1ShotPlayer implements BattleshipsPlayer {
         }
     }
 
-    
-
     @Override
     public void endRound(int round, int points, int enemyPoints) {
-     
-            //Decides if it should start with firePos1 or firePos2.
-        if (round == 200){
-            if (points > enemyPoints){
+
+        //Decides if it should start with firePos1 or firePos2.
+        if (round == 200) {
+            if (points > enemyPoints) {
                 whereToStart = false;
-            } else{
+            } else {
                 whereToStart = true;
             }
         }
-        if (round == 400){
-            if (points > enemyPoints){
+        if (round == 400) {
+            if (points > enemyPoints) {
                 whereToStart = false;
-            } else{
+            } else {
                 whereToStart = true;
             }
         }
-        if (round == 600){
-            if (points > enemyPoints){
+        if (round == 600) {
+            if (points > enemyPoints) {
                 whereToStart = false;
-            } else{
+            } else {
                 whereToStart = true;
             }
         }
-        if (round == 800){
-            if (points > enemyPoints){
+        if (round == 800) {
+            if (points > enemyPoints) {
                 whereToStart = false;
-            } else{
+            } else {
                 whereToStart = true;
             }
         }
-        
-    
+
     }
 
     @Override
     public void endMatch(int won, int lost, int draw) {
         //Do nothing
     }
-
-    
 
 }
