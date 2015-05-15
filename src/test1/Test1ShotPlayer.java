@@ -60,6 +60,7 @@ public class Test1ShotPlayer implements BattleshipsPlayer {
     public void startRound(int round) {
         hunter = null;
         lastShot = null;
+        fillShootArrays();
     }
 
     @Override
@@ -197,18 +198,13 @@ public class Test1ShotPlayer implements BattleshipsPlayer {
     }
 
     public void decideWhereToStart() {
-        if (whereToStart == true) {
-            whichArrayToUse = true;
-        } else {
-            whichArrayToUse = false;
-        }
-
+        whichArrayToUse = whereToStart;
     }
 
     @Override
     public Position getFireCoordinates(Fleet enemyShips) {
 
-        fillShootArrays();
+        
 
         if (hunter != null) {
             shot = hunter.getShot();
