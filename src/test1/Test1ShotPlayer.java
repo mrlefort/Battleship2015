@@ -34,15 +34,15 @@ public class Test1ShotPlayer implements BattleshipsPlayer {
 
     boolean whichArrayToUse = false;
     boolean whereToStart = false;
-    
+
     private Hunter hunter;
-    
+
     ParticipantInfo partInfo = new Participant(null);
 
     ArrayList<Position> notYetShot = new ArrayList<>(sizeX * sizeY);
     ArrayList<Position> firePos1 = new ArrayList<>(sizeX * sizeY);
     ArrayList<Position> firePos2 = new ArrayList<>(sizeX * sizeY);
-    
+
     private Position lastShot;
 
     public Test1ShotPlayer() {
@@ -81,12 +81,11 @@ public class Test1ShotPlayer implements BattleshipsPlayer {
 
     public void fillShootArrays() {
         //Fyld et array med objecter for hvert co-ordinat
-        
-        //skal slettes
-//        sizeX = 10;
-//        sizeY = 10;
-        
-        
+
+//        skal slettes
+        sizeX = 10;
+        sizeY = 10;
+
         firePos1 = new ArrayList<>(sizeX * sizeY);
 
         for (int x = 0; x < 9; x++) {
@@ -113,39 +112,45 @@ public class Test1ShotPlayer implements BattleshipsPlayer {
     @Override
     public Position getFireCoordinates(Fleet enemyShips) {
 
-        
-        
-        if (whereToStart == true){
-            whichArrayToUse = true;
-        }
-        
-        
-        //bruger først firePos1 og derefter firePos2
-        if (whichArrayToUse == false) {
-            shot = firePos1.get(shotIndex);
-            shotIndex++;
+        if (hunter != null) {
+            shot = hunter.getShot();
+            if (hunter.getShot() == null) {
 
-            if (shotIndex == firePos1.size()) {
-                shotIndex = 0;
+                hunter = null;
+
+            } else {
+
+            }
+            if (whereToStart == true) {
                 whichArrayToUse = true;
+            }
+
+            //bruger først firePos1 og derefter firePos2
+            if (whichArrayToUse == false) {
+                shot = firePos1.get(shotIndex);
+                shotIndex++;
+
+                if (shotIndex == firePos1.size()) {
+                    shotIndex = 0;
+                    whichArrayToUse = true;
+
+                }
 
             }
 
-        }
+            if (whichArrayToUse == true) {
+                shot = firePos2.get(shotIndex);
+                shotIndex++;
 
-        if (whichArrayToUse == true) {
-            shot = firePos2.get(shotIndex);
-            shotIndex++;
-            
-            if (shotIndex == firePos2.size()) {
-                shotIndex = 0;
-                whichArrayToUse = false;
+                if (shotIndex == firePos2.size()) {
+                    shotIndex = 0;
+                    whichArrayToUse = false;
+
+                }
 
             }
-
         }
-        
-        
+
         lastShot = shot;
         notYetShot.remove(shot);
         return shot;
@@ -153,13 +158,17 @@ public class Test1ShotPlayer implements BattleshipsPlayer {
 
     @Override
     public void hitFeedBack(boolean hit, Fleet enemyShips) {
-        if (hit){
-            if (hunter == null)
+        if (hit) {
+            if (hunter == null) {
                 hunter = new Hunter(notYetShot, lastShot);
                 hunter.hit();
-                }
+
+            } else {
+                hunter.hit();
+
+            }
         }
-    
+    }
 
     @Override
     public void startMatch(int rounds) {
@@ -181,7 +190,7 @@ public class Test1ShotPlayer implements BattleshipsPlayer {
         //Do nothing
     }
 
-        // skal slettes
+    // skal slettes
     public static void main(String[] args) {
         Test1ShotPlayer p = new Test1ShotPlayer();
 
