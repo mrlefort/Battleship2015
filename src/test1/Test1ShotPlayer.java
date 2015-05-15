@@ -281,6 +281,7 @@ public class Test1ShotPlayer implements BattleshipsPlayer {
     @Override
     public void endRound(int round, int points, int enemyPoints) {
      
+            //Decides if it should start with firePos1 or firePos2.
         if (round == 200){
             if (points > enemyPoints){
                 whereToStart = false;
