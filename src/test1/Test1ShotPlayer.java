@@ -42,7 +42,7 @@ public class Test1ShotPlayer implements BattleshipsPlayer {
     ParticipantInfo partInfo = new Participant(null);
 
     ArrayList<Position> notYetShot = new ArrayList<>(sizeX * sizeY);
-    ArrayList<Position> firePos1 = new ArrayList<>(sizeX * sizeY);
+    ArrayList<Position> firePos1;
     ArrayList<Position> firePos2 = new ArrayList<>(sizeX * sizeY);
 
     private Position lastShot;
@@ -184,8 +184,8 @@ public class Test1ShotPlayer implements BattleshipsPlayer {
         }
         Collections.shuffle(firePos1);
 
-        for (int i = 2; i < 8; i++) {
-            for (int k = 2; k < 8; k++) {
+        for (int i = 3; i < 8; i++) {
+            for (int k = 3; k < 8; k++) {
                 firePos1.add(new Position(i, k));
                 firePos2.remove(new Position(i, k));
                 notYetShot.add(new Position(i, k));
@@ -193,6 +193,15 @@ public class Test1ShotPlayer implements BattleshipsPlayer {
             }
         }
         Collections.shuffle(firePos2);
+
+    }
+
+    public void decideWhereToStart() {
+        if (whereToStart == true) {
+            whichArrayToUse = true;
+        } else {
+            whichArrayToUse = false;
+        }
 
     }
 
@@ -210,13 +219,10 @@ public class Test1ShotPlayer implements BattleshipsPlayer {
 
         } else {
 
-            
-            if (whereToStart == true) {
-                whichArrayToUse = true;
-            }
+            decideWhereToStart();
 
             //First shoots from firePos1 then afterwards firePos2
-            while (whichArrayToUse == false) {
+            if (whichArrayToUse == false) {
                 shot = firePos1.get(shotIndex);
                 shotIndex++;
 
@@ -226,17 +232,17 @@ public class Test1ShotPlayer implements BattleshipsPlayer {
 
                 }
 
+            } else {
+
+                shot = firePos2.get(shotIndex);
+                shotIndex++;
+
+                if (shotIndex == firePos2.size()) {
+                    shotIndex = 0;
+                    whichArrayToUse = false;
+
+                }
             }
-
-            shot = firePos2.get(shotIndex);
-            shotIndex++;
-
-            if (shotIndex == firePos2.size()) {
-                shotIndex = 0;
-                whichArrayToUse = false;
-
-            }
-
         }
 
         lastShot = shot;
