@@ -35,6 +35,29 @@ public class Position {
         this.y = y;
     }
     
+    @Override
+    public int hashCode() {
+	int hash = 7;
+	hash = 31 * hash + this.x;
+	hash = 31 * hash + this.y;
+	return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+	if (obj == null) {
+	    return false;
+	}
+	if (getClass() != obj.getClass()) {
+	    return false;
+	}
+	final Position other = (Position) obj;
+	if (this.x != other.x) {
+	    return false;
+	}
+	return this.y == other.y;
+    }
+    
     
     
 }

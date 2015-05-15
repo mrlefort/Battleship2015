@@ -14,6 +14,9 @@ import java.util.Collections;
 import java.util.Random;
 import tournament.impl.Participant;
 import tournament.impl.ParticipantInfo;
+import tournament.player.PlayerFactory;
+import tournament.player.PlayerInfo;
+
 
 /**
  *
@@ -36,7 +39,7 @@ public class Test1ShotPlayer implements BattleshipsPlayer {
     boolean whereToStart = false;
 
     private Hunter hunter;
-    
+
     private boolean[][] posHist;
 
     ParticipantInfo partInfo = new Participant(null);
@@ -50,110 +53,120 @@ public class Test1ShotPlayer implements BattleshipsPlayer {
     public Test1ShotPlayer() {
 
     }
+    
+    @Override
+    public void startMatch(int rounds) {
+        lastShot = null;
+    }
+
+    @Override
+    public void startRound(int round) {
+        hunter = null;
+        lastShot = null;
+    }
 
     @Override
     public void placeShips(Fleet fleet, Board board) {
         nextX = 1;
-	nextY = 0;
-	sizeX = board.sizeX();
-	sizeY = board.sizeY();
+        nextY = 0;
+        sizeX = board.sizeX();
+        sizeY = board.sizeY();
 
-	posHist = new boolean[sizeX][sizeY];
+        posHist = new boolean[sizeX][sizeY];
 
-	for (int i = 0; i < fleet.getNumberOfShips(); ++i) {
-	    Ship s = fleet.getShip(i);
-	    placeShip(s, board);
-	}
+        for (int i = 0; i < fleet.getNumberOfShips(); ++i) {
+            Ship s = fleet.getShip(i);
+            placeShip(s, board);
+        }
     }
-    
-    
-    
+
     private void placeShip(Ship s, Board board) {
-        
+
         //Places a ship
-	boolean vertical = rnd.nextBoolean();
-	int x;
-	int y;
+        boolean vertical = rnd.nextBoolean();
+        int x;
+        int y;
 
-	while (true) {
+        while (true) {
 
-	    if (vertical) {
-		x = rnd.nextInt(sizeX);
-		y = rnd.nextInt(sizeY - (s.size() - 1));
+            if (vertical) {
+                x = rnd.nextInt(sizeX);
+                y = rnd.nextInt(sizeY - (s.size() - 1));
 
-	    } else {
-		x = rnd.nextInt(sizeX - (s.size() - 1));
-		y = rnd.nextInt(sizeY);
-	    }
-	    if (testShip(s, x, y, vertical)) {
+            } else {
+                x = rnd.nextInt(sizeX - (s.size() - 1));
+                y = rnd.nextInt(sizeY);
+            }
+            if (testShip(s, x, y, vertical)) {
 
-		break;
+                break;
 
-	    }
+            }
 
-	}
+        }
         //Adds it to markShip()
-	markShip(s, x, y, vertical);
+        markShip(s, x, y, vertical);
         //Places it on the board
-	board.placeShip(new Position(x, y), s, vertical);
+        board.placeShip(new Position(x, y), s, vertical);
 
     }
 
     private boolean testShip(Ship s, int xPos, int yPos, boolean vertical) {
-        
+
         //Test if there's a ship already
-	for (int i = 0; i < s.size(); i++) {
+        for (int i = 0; i < s.size(); i++) {
 
-	    if (posHist[xPos][yPos]) {
+            if (posHist[xPos][yPos]) {
 
-		return false;
-	    }
+                return false;
+            }
 
-	    if (xPos < 0 || xPos > 9) {
+            if (xPos < 0 || xPos > 9) {
 
-		if (posHist[xPos + 1][yPos] || (posHist[xPos - 1][yPos])) {
-		    return false;
-		}
-	    }
+                if (posHist[xPos + 1][yPos] || (posHist[xPos - 1][yPos])) {
+                    return false;
+                }
+            }
 
-	    if (yPos < 0 || yPos > 9) {
+            if (yPos < 0 || yPos > 9) {
 
-		if (posHist[xPos][yPos + 1] || posHist[xPos][yPos - 1]) {
-		    return false;
-		}
-	    }
+                if (posHist[xPos][yPos + 1] || posHist[xPos][yPos - 1]) {
+                    return false;
+                }
+            }
 
-	    if (vertical) {
+            if (vertical) {
 
-		++yPos;
+                ++yPos;
 
-	    } else {
+            } else {
 
-		++xPos;
+                ++xPos;
 
-	    }
-	}
+            }
+        }
 
-	return true;
+        return true;
     }
 
     private void markShip(Ship s, int xPos, int yPos, boolean vertical) {
-        
+
         //marks where my ships are
-	for (int i = 0; i < s.size(); i++) {
-	    posHist[xPos][yPos] = true;
+        for (int i = 0; i < s.size(); i++) {
+            posHist[xPos][yPos] = true;
 
-	    if (vertical) {
+            if (vertical) {
 
-		++yPos;
+                ++yPos;
 
-	    } else {
+            } else {
 
-		++xPos;
+                ++xPos;
 
-	    }
-	}
+            }
+        }
     }
+
     
     
     @Override
@@ -166,8 +179,8 @@ public class Test1ShotPlayer implements BattleshipsPlayer {
         //Fills an array with every coordinate
 
         //deleting this later
-        sizeX = 10;
-        sizeY = 10;
+//        sizeX = 10;
+//        sizeY = 10;
 
         firePos1 = new ArrayList<>(sizeX * sizeY);
 
@@ -192,24 +205,64 @@ public class Test1ShotPlayer implements BattleshipsPlayer {
 
     }
 
+//    public void useFirePos1OrForepos2(){
+//        ParticipantInfo par = new Participant( new PlayerFactor<PlayerType>() ) ;
+//        int gamesPlayed = 0;
+//        gamesPlayed = par.getMatchesWon() + par.getMatchesDraw() + par.getMatchesLost();
+//        if (gamesPlayed == 200){
+//            if (par.getMatchesWon() > (par.getMatchesDraw() + par.getMatchesLost())){
+//                whereToStart = false;
+//            } else{
+//                whereToStart = true;
+//            }
+//        }
+//        if (gamesPlayed == 400){
+//            if (par.getMatchesWon() > (par.getMatchesDraw() + par.getMatchesLost())){
+//                whereToStart = false;
+//            } else{
+//                whereToStart = true;
+//            }
+//        }
+//        if (gamesPlayed == 600){
+//            if (par.getMatchesWon() > (par.getMatchesDraw() + par.getMatchesLost())){
+//                whereToStart = false;
+//            } else{
+//                whereToStart = true;
+//            }
+//        }
+//        if (gamesPlayed == 800){
+//            if (par.getMatchesWon() > (par.getMatchesDraw() + par.getMatchesLost())){
+//                whereToStart = false;
+//            } else{
+//                whereToStart = true;
+//            }
+//        }
+//        
+//    }
+    
+    
+    
+    
+    
     @Override
     public Position getFireCoordinates(Fleet enemyShips) {
+        
+        fillShootArrays();
 
         if (hunter != null) {
             shot = hunter.getShot();
             if (hunter.getShot() == null) {
 
                 hunter = null;
+            }
 
-            } else {
+        } else {
 
-            //Køre metoden til at bestemme whereToStart = true eller false
-            //
-            //
-            //
-                
+            //runs a method to decide whether to use firePos1 or firePos2.
+//            useFirePos1OrForepos2();
             
-                
+            
+            
             if (whereToStart == true) {
                 whichArrayToUse = true;
             }
@@ -225,9 +278,8 @@ public class Test1ShotPlayer implements BattleshipsPlayer {
 
                 }
 
-            }
+            } else {
 
-            if (whichArrayToUse == true) {
                 shot = firePos2.get(shotIndex);
                 shotIndex++;
 
@@ -236,8 +288,9 @@ public class Test1ShotPlayer implements BattleshipsPlayer {
                     whichArrayToUse = false;
 
                 }
+
             }
-            }
+
         }
 
         lastShot = shot;
@@ -259,16 +312,7 @@ public class Test1ShotPlayer implements BattleshipsPlayer {
         }
     }
 
-    @Override
-    public void startMatch(int rounds) {
-        lastShot = null;
-    }
-
-    @Override
-    public void startRound(int round) {
-        hunter = null;
-	lastShot = null;
-    }
+    
 
     @Override
     public void endRound(int round, int points, int enemyPoints) {
@@ -281,13 +325,5 @@ public class Test1ShotPlayer implements BattleshipsPlayer {
     }
 
     
-    
 
-    
-    // skal slettes
-    public static void main(String[] args) {
-        Test1ShotPlayer p = new Test1ShotPlayer();
-
-        p.fillShootArrays();
-    }
 }
