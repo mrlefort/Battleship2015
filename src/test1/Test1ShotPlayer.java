@@ -174,26 +174,47 @@ public class Test1ShotPlayer implements BattleshipsPlayer {
     public void fillShootArrays() {
         //Fills an array with every coordinate
 
-        firePos1 = new ArrayList<>(100);
+        firePos1 = new ArrayList<>(50);
+        int h = 0;
+        int g = 0;
+        int t = 0;
 
-        for (int x = 0; x < 10; x++) {
-            for (int y = 0; y < 10; y++) {
-                firePos2.add(new Position(x, y));
-                notYetShot.add(new Position(x, y));
-
+        while (h != 50) {
+            for (int f = t; f < 10; f += 2) {
+                firePos1.add(new Position(f, g));
+                    if (f == 8) {
+                        t = 1;
+                        g++;
+                        h++;
+                    }
+                    if (f == 9) {
+                        t = 0;
+                        g++;
+                        h++;
+                    }
             }
         }
-        Collections.shuffle(firePos1);
-
-        for (int i = 3; i < 8; i++) {
-            for (int k = 3; k < 8; k++) {
-                firePos1.add(new Position(i, k));
-                firePos2.remove(new Position(i, k));
-                notYetShot.add(new Position(i, k));
-
-            }
-        }
-        Collections.shuffle(firePos2);
+        
+        
+//
+//        for (int x = 0; x < 10; x++) {
+//            for (int y = 0; y < 10; y++) {
+//                firePos2.add(new Position(x, y));
+//                notYetShot.add(new Position(x, y));
+//
+//            }
+//        }
+//        Collections.shuffle(firePos1);
+//
+//        for (int i = 4; i < 7; i++) {
+//            for (int k = 4; k < 7; k++) {
+//                firePos1.add(new Position(i, k));
+//                firePos2.remove(new Position(i, k));
+//                notYetShot.add(new Position(i, k));
+//
+//            }
+//        }
+//        Collections.shuffle(firePos2);
 
     }
 
@@ -204,8 +225,6 @@ public class Test1ShotPlayer implements BattleshipsPlayer {
     @Override
     public Position getFireCoordinates(Fleet enemyShips) {
 
-        
-
         if (hunter != null) {
             shot = hunter.getShot();
             if (hunter.getShot() == null) {
@@ -214,31 +233,34 @@ public class Test1ShotPlayer implements BattleshipsPlayer {
             }
 
         } else {
-
-            decideWhereToStart();
-
-            //First shoots from firePos1 then afterwards firePos2
-            if (whichArrayToUse == false) {
-                shot = firePos1.get(shotIndex);
+            shot = firePos1.get(shotIndex);
                 shotIndex++;
-
-                if (shotIndex == firePos1.size()) {
-                    shotIndex = 0;
-                    whichArrayToUse = true;
-
-                }
-
-            } else {
-
-                shot = firePos2.get(shotIndex);
-                shotIndex++;
-
-                if (shotIndex == firePos2.size()) {
-                    shotIndex = 0;
-                    whichArrayToUse = false;
-
-                }
-            }
+            
+//
+//            decideWhereToStart();
+//
+//            //First shoots from firePos1 then afterwards firePos2
+//            if (whichArrayToUse == false) {
+//                shot = firePos1.get(shotIndex);
+//                shotIndex++;
+//
+//                if (shotIndex == firePos1.size()) {
+//                    shotIndex = 0;
+//                    whichArrayToUse = true;
+//
+//                }
+//
+//            } else {
+//
+//                shot = firePos2.get(shotIndex);
+//                shotIndex++;
+//
+//                if (shotIndex == firePos2.size()) {
+//                    shotIndex = 0;
+//                    whichArrayToUse = false;
+//
+//                }
+//            }
         }
 
         lastShot = shot;
