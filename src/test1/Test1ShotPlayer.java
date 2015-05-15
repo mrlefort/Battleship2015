@@ -36,6 +36,8 @@ public class Test1ShotPlayer implements BattleshipsPlayer {
     boolean whereToStart = false;
 
     private Hunter hunter;
+    
+    private boolean[][] posHist;
 
     ParticipantInfo partInfo = new Participant(null);
 
@@ -51,28 +53,109 @@ public class Test1ShotPlayer implements BattleshipsPlayer {
 
     @Override
     public void placeShips(Fleet fleet, Board board) {
-        nextX = 0;
-        nextY = 0;
-        sizeX = board.sizeX();
-        sizeY = board.sizeY();
+        nextX = 1;
+	nextY = 0;
+	sizeX = board.sizeX();
+	sizeY = board.sizeY();
 
-        for (int i = 0; i < fleet.getNumberOfShips(); ++i) {
-            Ship s = fleet.getShip(i);
-            boolean vertical = rnd.nextBoolean();
-            Position pos;
-            if (vertical) {
-                int x = rnd.nextInt(sizeX);
-                int y = rnd.nextInt(sizeY - (s.size() - 1));
-                pos = new Position(x, y);
-            } else {
-                int x = rnd.nextInt(sizeX - (s.size() - 1));
-                int y = rnd.nextInt(sizeY);
-                pos = new Position(x, y);
-            }
-            board.placeShip(pos, s, vertical);
-        }
+	posHist = new boolean[sizeX][sizeY];
+
+	for (int i = 0; i < fleet.getNumberOfShips(); ++i) {
+	    Ship s = fleet.getShip(i);
+	    placeShip(s, board);
+	}
+    }
+    
+    
+    
+    private void placeShip(Ship s, Board board) {
+        
+        //Places a ship
+	boolean vertical = rnd.nextBoolean();
+	int x;
+	int y;
+
+	while (true) {
+
+	    if (vertical) {
+		x = rnd.nextInt(sizeX);
+		y = rnd.nextInt(sizeY - (s.size() - 1));
+
+	    } else {
+		x = rnd.nextInt(sizeX - (s.size() - 1));
+		y = rnd.nextInt(sizeY);
+	    }
+	    if (testShip(s, x, y, vertical)) {
+
+		break;
+
+	    }
+
+	}
+        //Adds it to markShip()
+	markShip(s, x, y, vertical);
+        //Places it on the board
+	board.placeShip(new Position(x, y), s, vertical);
+
     }
 
+    private boolean testShip(Ship s, int xPos, int yPos, boolean vertical) {
+        
+        //Test if there's a ship already
+	for (int i = 0; i < s.size(); i++) {
+
+	    if (posHist[xPos][yPos]) {
+
+		return false;
+	    }
+
+	    if (xPos < 0 || xPos > 9) {
+
+		if (posHist[xPos + 1][yPos] || (posHist[xPos - 1][yPos])) {
+		    return false;
+		}
+	    }
+
+	    if (yPos < 0 || yPos > 9) {
+
+		if (posHist[xPos][yPos + 1] || posHist[xPos][yPos - 1]) {
+		    return false;
+		}
+	    }
+
+	    if (vertical) {
+
+		++yPos;
+
+	    } else {
+
+		++xPos;
+
+	    }
+	}
+
+	return true;
+    }
+
+    private void markShip(Ship s, int xPos, int yPos, boolean vertical) {
+        
+        //marks where my ships are
+	for (int i = 0; i < s.size(); i++) {
+	    posHist[xPos][yPos] = true;
+
+	    if (vertical) {
+
+		++yPos;
+
+	    } else {
+
+		++xPos;
+
+	    }
+	}
+    }
+    
+    
     @Override
     public void incoming(Position pos) {
 
@@ -120,7 +203,13 @@ public class Test1ShotPlayer implements BattleshipsPlayer {
 
             } else {
 
-            }
+            //Køre metoden til at bestemme whereToStart = true eller false
+            //
+            //
+            //
+                
+            
+                
             if (whereToStart == true) {
                 whichArrayToUse = true;
             }
@@ -147,7 +236,7 @@ public class Test1ShotPlayer implements BattleshipsPlayer {
                     whichArrayToUse = false;
 
                 }
-
+            }
             }
         }
 
@@ -172,12 +261,13 @@ public class Test1ShotPlayer implements BattleshipsPlayer {
 
     @Override
     public void startMatch(int rounds) {
-        //Do nothing
+        lastShot = null;
     }
 
     @Override
     public void startRound(int round) {
-        //Do nothing
+        hunter = null;
+	lastShot = null;
     }
 
     @Override
@@ -190,6 +280,10 @@ public class Test1ShotPlayer implements BattleshipsPlayer {
         //Do nothing
     }
 
+    
+    
+
+    
     // skal slettes
     public static void main(String[] args) {
         Test1ShotPlayer p = new Test1ShotPlayer();
