@@ -205,40 +205,7 @@ public class Test1ShotPlayer implements BattleshipsPlayer {
 
     }
 
-//    public void useFirePos1OrForepos2(){
-//        ParticipantInfo par = new Participant( new PlayerFactor<PlayerType>() ) ;
-//        int gamesPlayed = 0;
-//        gamesPlayed = par.getMatchesWon() + par.getMatchesDraw() + par.getMatchesLost();
-//        if (gamesPlayed == 200){
-//            if (par.getMatchesWon() > (par.getMatchesDraw() + par.getMatchesLost())){
-//                whereToStart = false;
-//            } else{
-//                whereToStart = true;
-//            }
-//        }
-//        if (gamesPlayed == 400){
-//            if (par.getMatchesWon() > (par.getMatchesDraw() + par.getMatchesLost())){
-//                whereToStart = false;
-//            } else{
-//                whereToStart = true;
-//            }
-//        }
-//        if (gamesPlayed == 600){
-//            if (par.getMatchesWon() > (par.getMatchesDraw() + par.getMatchesLost())){
-//                whereToStart = false;
-//            } else{
-//                whereToStart = true;
-//            }
-//        }
-//        if (gamesPlayed == 800){
-//            if (par.getMatchesWon() > (par.getMatchesDraw() + par.getMatchesLost())){
-//                whereToStart = false;
-//            } else{
-//                whereToStart = true;
-//            }
-//        }
-//        
-//    }
+    
     
     
     
@@ -258,9 +225,6 @@ public class Test1ShotPlayer implements BattleshipsPlayer {
 
         } else {
 
-            //runs a method to decide whether to use firePos1 or firePos2.
-//            useFirePos1OrForepos2();
-            
             
             
             if (whereToStart == true) {
@@ -316,7 +280,37 @@ public class Test1ShotPlayer implements BattleshipsPlayer {
 
     @Override
     public void endRound(int round, int points, int enemyPoints) {
-        //Do nothing
+     
+        if (round == 200){
+            if (points > enemyPoints){
+                whereToStart = false;
+            } else{
+                whereToStart = true;
+            }
+        }
+        if (round == 400){
+            if (points > enemyPoints){
+                whereToStart = false;
+            } else{
+                whereToStart = true;
+            }
+        }
+        if (round == 600){
+            if (points > enemyPoints){
+                whereToStart = false;
+            } else{
+                whereToStart = true;
+            }
+        }
+        if (round == 800){
+            if (points > enemyPoints){
+                whereToStart = false;
+            } else{
+                whereToStart = true;
+            }
+        }
+        
+    
     }
 
     @Override
