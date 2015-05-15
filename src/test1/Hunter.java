@@ -33,22 +33,22 @@ public class Hunter {
     
     public void Destroyer(Position p){
         
-        //nord
+        //north
 	Position temp = new Position(p.x, p.y+1);
 	if(shotList.remove(temp)){    //removes from notYetShot
 	    stack.push(temp);
 	}
-	//øst
+	//east
 	temp = new Position(p.x+1, p.y);
 	if(shotList.remove(temp)){    //removes from notYetShot
 	    stack.push(temp);
 	}
-	//vest
+	//west
 	temp = new Position(p.x-1, p.y);
 	if(shotList.remove(temp)){    //removes from notYetShot
 	    stack.push(temp);
 	}
-	//syd
+	//south
 	temp = new Position(p.x, p.y-1);
 	if(shotList.remove(temp)){    //removes from notYetShot
 	    stack.push(temp);
