@@ -27,7 +27,7 @@ public class Hunter {
     
     public Position getShot(){
         if(stack.empty()) return null;
-	startPos = stack.pop();
+	startPos = stack.pop();     //Removes the object at the top of this stack and returns that object as the value of this function.
 	return startPos;
     }
     
@@ -35,22 +35,22 @@ public class Hunter {
         
         //nord
 	Position temp = new Position(p.x, p.y+1);
-	if(shotList.remove(temp)){
+	if(shotList.remove(temp)){    //removes from notYetShot
 	    stack.push(temp);
 	}
 	//øst
 	temp = new Position(p.x+1, p.y);
-	if(shotList.remove(temp)){
+	if(shotList.remove(temp)){    //removes from notYetShot
 	    stack.push(temp);
 	}
 	//vest
 	temp = new Position(p.x-1, p.y);
-	if(shotList.remove(temp)){
+	if(shotList.remove(temp)){    //removes from notYetShot
 	    stack.push(temp);
 	}
 	//syd
 	temp = new Position(p.x, p.y-1);
-	if(shotList.remove(temp)){
+	if(shotList.remove(temp)){    //removes from notYetShot
 	    stack.push(temp);
 	}
     

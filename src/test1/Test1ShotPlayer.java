@@ -80,9 +80,9 @@ public class Test1ShotPlayer implements BattleshipsPlayer {
     }
 
     public void fillShootArrays() {
-        //Fyld et array med objecter for hvert co-ordinat
+        //Fills an array with every coordinate
 
-//        skal slettes
+        //deleting this later
         sizeX = 10;
         sizeY = 10;
 
@@ -125,7 +125,7 @@ public class Test1ShotPlayer implements BattleshipsPlayer {
                 whichArrayToUse = true;
             }
 
-            //bruger først firePos1 og derefter firePos2
+            //First shoots from firePos1 then afterwards firePos2
             if (whichArrayToUse == false) {
                 shot = firePos1.get(shotIndex);
                 shotIndex++;
