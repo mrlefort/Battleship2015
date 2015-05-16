@@ -172,6 +172,7 @@ public class Test1ShotPlayer implements BattleshipsPlayer {
         }
     }
 
+    
     @Override
     public void incoming(Position pos) {
 
