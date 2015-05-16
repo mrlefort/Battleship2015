@@ -284,7 +284,7 @@ public class Test1ShotPlayer implements BattleshipsPlayer {
                 }
             }
         }
-        System.out.println(shot);
+        
         lastShot = shot;
         notYetShot.remove(shot);
         return shot;
