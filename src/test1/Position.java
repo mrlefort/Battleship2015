@@ -58,6 +58,6 @@ public class Position {
 	return this.y == other.y;
     }
     
-    
+  
     
 }
