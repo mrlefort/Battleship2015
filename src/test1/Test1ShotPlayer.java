@@ -45,6 +45,7 @@ public class Test1ShotPlayer implements BattleshipsPlayer {
     
     int shotIndex;
     int shotIndex2;
+    int l;
     
 
 
@@ -64,23 +65,26 @@ public class Test1ShotPlayer implements BattleshipsPlayer {
 
     @Override
     public void startRound(int round) { 
-        System.out.println("this is start round");
+        System.out.println("this is start round"); //skal slettes
         hunter = null;
         lastPos = null;
         firePos1 = new ArrayList<>();
         firePos2 = new ArrayList<>();
         
-//        decideWhereToStart();
+//        decideWhereToStart();  // skal kun bruges hvis det der sker i endRound skal bruges
         fillNotYetShot();
         fillShootArrays();
     }
 
     @Override
     public void placeShips(Fleet fleet, Board board) {
+        
+        //placerer skibene og bruger placeShip nedenunder
         nextX = 0;
         nextY = 0;
         sizeX = board.sizeX();
         sizeY = board.sizeY();
+        l = 0;
        
 
         posHist = new boolean[sizeX][sizeY];
@@ -115,7 +119,7 @@ public class Test1ShotPlayer implements BattleshipsPlayer {
             }
 
         }
-        //Adds it to markShip()
+        //Adds it to markShip() so we know where it is.
         markShip(s, x, y, vertical);
         //Places it on the board
         board.placeShip(new Position(x, y), s, vertical);
@@ -124,7 +128,7 @@ public class Test1ShotPlayer implements BattleshipsPlayer {
 
     private boolean testShip(Ship s, int xPos, int yPos, boolean vertical) {
 
-        //Test if there's a ship already
+        //Test if there's a ship already. Is run in placeShip above
         for (int i = 0; i < s.size(); i++) {
 
             if (posHist[xPos][yPos]) {
@@ -185,9 +189,10 @@ public class Test1ShotPlayer implements BattleshipsPlayer {
     }
 
     public void fillNotYetShot() {
-        int l = 0;
+        //fills an ArrayList with every single coordinate.
+        
 
-        while (l < 101) {
+        while (l <= 100) {
             Pos notShot = new Pos(nextX, nextY);
             ++nextX;
             if (nextX >= 10) {
@@ -251,10 +256,10 @@ public class Test1ShotPlayer implements BattleshipsPlayer {
                 }
             }
         }
-        for (int i = 0; i < firePos1.size(); i++) {
+        for (int i = 0; i < firePos1.size(); i++) {      //delete this after
             System.out.println("This is firePos1: " + firePos1.get(i).getX() + "," + firePos1.get(i).getY());
         }
-        for (int i = 0; i < firePos2.size(); i++) {
+        for (int i = 0; i < firePos2.size(); i++) {      //delete this after
             System.out.println("This is firePos2: " + firePos2.get(i).getX() + "," + firePos2.get(i).getY());
         }
     }
@@ -284,7 +289,8 @@ public class Test1ShotPlayer implements BattleshipsPlayer {
         
 
         
-
+            // For some reason something is going wrong with this code. Needs to work.
+        
 //        if (hunter != null) {
 //            shot = hunter.getShot();
 //            if (hunter.getShot() == null) {
@@ -295,9 +301,9 @@ public class Test1ShotPlayer implements BattleshipsPlayer {
 //        } else {
 
 
+//            decideWhereToStart();
             
-            
-            //First shoots from firePos1 then afterwards firePos2
+            //First shoots from firePos1 then afterwards firePos2. Shoots from firePos1. Doesn't seem to shoot from firePos2.
             if (shotIndex <= firePos1.size()) {
                 
                 shot = firePos1.get(shotIndex);
@@ -305,7 +311,8 @@ public class Test1ShotPlayer implements BattleshipsPlayer {
                 lastPos = shot;
                 notYetShot.remove(shot);
                 
-                System.out.println("shot taken from firePos1 " + shot.getX()+ ",  " + shot.getY());
+                System.out.println("shot taken from firePos1 " + shot.getX()+ ",  " + shot.getY());     //delete later
+                
                 
                 
             }  else {
@@ -317,7 +324,7 @@ public class Test1ShotPlayer implements BattleshipsPlayer {
                 lastPos = shot;
                 notYetShot.remove(shot);
                 
-                System.out.println("shot taken from firePos2 " + shot.getX()+ ",  " + shot.getY());
+                System.out.println("shot taken from firePos2 " + shot.getX()+ ",  " + shot.getY());   //delete later
                 
                 
                 
@@ -326,9 +333,9 @@ public class Test1ShotPlayer implements BattleshipsPlayer {
 
                 
 
-//        }
                 p = new Position(shot.getX(), shot.getY());
-                System.out.println("******* Actual shot completed of the arrays " + shot.getX() + ", " + shot.getY());
+                System.out.println("******* Actual shot completed of the arrays " + shot.getX() + ", " + shot.getY());     //delete later
+
                 return p; 
       
     }
