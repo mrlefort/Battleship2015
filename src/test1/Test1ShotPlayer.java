@@ -43,6 +43,9 @@ public class Test1ShotPlayer implements BattleshipsPlayer {
     ArrayList<Pos> firePos1;
     ArrayList<Pos> firePos2;
     
+    int shotIndex;
+    int shotIndex2;
+    
 
 
     private Pos lastPos;
@@ -200,7 +203,8 @@ public class Test1ShotPlayer implements BattleshipsPlayer {
 
     public void fillShootArrays() {
         //Fills 2 arrays, 1 inner and one outer.
-        
+        shotIndex = 0;
+        shotIndex2 = 0;
         
 
         int h = 0;
@@ -260,8 +264,7 @@ public class Test1ShotPlayer implements BattleshipsPlayer {
 
     @Override
     public Position getFireCoordinates(Fleet enemyShips) {
-        int shotIndex = 0;
-        int shotIndex2 = 0;
+
         Position p;
 //  systematicshotplayer
 //        Position shot = new Position(nextX, nextY);
