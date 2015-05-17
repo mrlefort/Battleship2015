@@ -320,7 +320,7 @@ public class Test1ShotPlayer implements BattleshipsPlayer {
             }
 
                 
-//            }
+
         }
                 p = new Position(shot.getX(), shot.getY());
                 System.out.println("******* Actual shot completed of the arrays " + shot.getX() + ", " + shot.getY());
