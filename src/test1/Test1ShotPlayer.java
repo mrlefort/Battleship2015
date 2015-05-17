@@ -45,6 +45,8 @@ public class Test1ShotPlayer implements BattleshipsPlayer {
     
     int shotIndex;
     int shotIndex2;
+    
+
 
     private Pos lastPos;
 
@@ -263,7 +265,7 @@ public class Test1ShotPlayer implements BattleshipsPlayer {
 
     @Override
     public Position getFireCoordinates(Fleet enemyShips) {
-   
+
         Position p;
 //  systematicshotplayer
 //        Position shot = new Position(nextX, nextY);
@@ -310,8 +312,8 @@ public class Test1ShotPlayer implements BattleshipsPlayer {
                 
                     
                 
-                shot = firePos2.get(shotIndex2);
-                shotIndex2++;
+                shot = firePos2.get(shotIndex2++);
+
                 lastPos = shot;
                 notYetShot.remove(shot);
                 
