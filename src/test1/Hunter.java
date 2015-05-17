@@ -37,22 +37,22 @@ public class Hunter {
         
         //north
 	Pos temp = new Pos(p.x, p.y+1);
-	if(shotList.remove(temp)){    //removes from notYetShot
+	if(shotList.remove(temp)){    //removes from notYetShot and places it in stack
 	    stack.push(temp);
 	}
 	//east
 	temp = new Pos(p.x+1, p.y);
-	if(shotList.remove(temp)){    //removes from notYetShot
+	if(shotList.remove(temp)){    //removes from notYetShot and places it in stack
 	    stack.push(temp);
 	}
 	//west
 	temp = new Pos(p.x-1, p.y);
-	if(shotList.remove(temp)){    //removes from notYetShot
+	if(shotList.remove(temp)){    //removes from notYetShot and places it in stack
 	    stack.push(temp);
 	}
 	//south
 	temp = new Pos(p.x, p.y-1);
-	if(shotList.remove(temp)){    //removes from notYetShot
+	if(shotList.remove(temp)){    //removes from notYetShot and places it in stack
 	    stack.push(temp);
 	}
     
