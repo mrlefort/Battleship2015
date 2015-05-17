@@ -67,8 +67,7 @@ public class Test1ShotPlayer implements BattleshipsPlayer {
         lastPos = null;
         firePos1 = new ArrayList<>();
         firePos2 = new ArrayList<>();
-        shotIndex = 0;
-        shotIndex2 = 0;
+        
 //        decideWhereToStart();
         fillNotYetShot();
         fillShootArrays();
@@ -80,6 +79,7 @@ public class Test1ShotPlayer implements BattleshipsPlayer {
         nextY = 0;
         sizeX = board.sizeX();
         sizeY = board.sizeY();
+       
 
         posHist = new boolean[sizeX][sizeY];
 
@@ -202,7 +202,8 @@ public class Test1ShotPlayer implements BattleshipsPlayer {
 
     public void fillShootArrays() {
         //Fills 2 arrays, 1 inner and one outer.
-        
+        shotIndex = 0;
+        shotIndex2 = 0;
         
 
         int h = 0;
@@ -282,20 +283,21 @@ public class Test1ShotPlayer implements BattleshipsPlayer {
 
         
 
-        if (hunter != null) {
-            shot = hunter.getShot();
-            if (hunter.getShot() == null) {
-
-                hunter = null;
-            }
-
-        } else {
+//        if (hunter != null) {
+//            shot = hunter.getShot();
+//            if (hunter.getShot() == null) {
+//
+//                hunter = null;
+//            }
+//
+//        } else {
 
 
             
             
             //First shoots from firePos1 then afterwards firePos2
             if (shotIndex <= firePos1.size()) {
+                
                 shot = firePos1.get(shotIndex);
                 shotIndex++;
                 lastPos = shot;
@@ -303,9 +305,10 @@ public class Test1ShotPlayer implements BattleshipsPlayer {
                 
                 System.out.println("shot taken from firePos1 " + shot.getX()+ ",  " + shot.getY());
                 
-
-
-            } else {
+                
+            } 
+            
+            else if (shotIndex >= firePos1.size()) {
                 
                     
                 
@@ -316,12 +319,14 @@ public class Test1ShotPlayer implements BattleshipsPlayer {
                 
                 System.out.println("shot taken from firePos2 " + shot.getX()+ ",  " + shot.getY());
                 
-
-            }
+                
+                
+                }     
+            
 
                 
-//            }
-        }
+
+//        }
                 p = new Position(shot.getX(), shot.getY());
                 System.out.println("******* Actual shot completed of the arrays " + shot.getX() + ", " + shot.getY());
                 return p; 
