@@ -306,9 +306,7 @@ public class Test1ShotPlayer implements BattleshipsPlayer {
                 System.out.println("shot taken from firePos1 " + shot.getX()+ ",  " + shot.getY());
                 
                 
-            } 
-            
-            else if (shotIndex >= firePos1.size()) {
+            }  else {
                 
                     
                 
