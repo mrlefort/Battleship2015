@@ -9,11 +9,11 @@ package test1;
  *
  * @author Steffen
  */
-public class Position {
-    private int x;
-    private int y;
+public class Pos {
+    public int x;
+    public int y;
 
-    public Position(int x, int y) {
+    public Pos(int x, int y) {
         this.x = x;
         this.y = y;
     }
@@ -51,7 +51,7 @@ public class Position {
 	if (getClass() != obj.getClass()) {
 	    return false;
 	}
-	final Position other = (Position) obj;
+	final Pos other = (Pos) obj;
 	if (this.x != other.x) {
 	    return false;
 	}

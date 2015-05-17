@@ -8,48 +8,50 @@ package test1;
 import java.util.ArrayList;
 import java.util.Stack;
 import battleship.interfaces.Position;
+import java.util.List;
 
 /**
  *
  * @author Steffen
  */
 public class Hunter {
-    private final ArrayList<Position> shotList;
-    private final Stack<Position> stack;
-    private Position startPos;
+    private final List<Pos> shotList;
+    private final Stack<Pos> stack;
+    private Pos lastShot;
+    
 
-    public Hunter(ArrayList<Position> shotList, Position startPos) {
+    public Hunter(List<Pos> shotList, Pos startPos) {
         this.shotList = shotList;
         this.stack = new Stack<>();
         stack.push(startPos);
         
     }
     
-    public Position getShot(){
+    public Pos getShot(){
         if(stack.empty()) return null;
-	startPos = stack.pop();     //Removes the object at the top of this stack and returns that object as the value of this function.
-	return startPos;
+	lastShot = stack.pop();     //Removes the object at the top of this stack and returns that object as the value of this function.
+	return lastShot;
     }
     
-    public void Destroyer(Position p){
+    public void Destroyer(Pos p){
         
         //north
-	Position temp = new Position(p.x, p.y+1);
+	Pos temp = new Pos(p.x, p.y+1);
 	if(shotList.remove(temp)){    //removes from notYetShot
 	    stack.push(temp);
 	}
 	//east
-	temp = new Position(p.x+1, p.y);
+	temp = new Pos(p.x+1, p.y);
 	if(shotList.remove(temp)){    //removes from notYetShot
 	    stack.push(temp);
 	}
 	//west
-	temp = new Position(p.x-1, p.y);
+	temp = new Pos(p.x-1, p.y);
 	if(shotList.remove(temp)){    //removes from notYetShot
 	    stack.push(temp);
 	}
 	//south
-	temp = new Position(p.x, p.y-1);
+	temp = new Pos(p.x, p.y-1);
 	if(shotList.remove(temp)){    //removes from notYetShot
 	    stack.push(temp);
 	}
@@ -58,7 +60,7 @@ public class Hunter {
     
     
     public void hit(){
-	Destroyer(startPos);
+	Destroyer(lastShot);
     }
     
     
