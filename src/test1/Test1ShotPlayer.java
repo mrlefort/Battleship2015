@@ -43,8 +43,7 @@ public class Test1ShotPlayer implements BattleshipsPlayer {
     ArrayList<Pos> firePos1;
     ArrayList<Pos> firePos2;
     
-    int shotIndex;
-    int shotIndex2;
+
 
     private Pos lastPos;
 
@@ -67,8 +66,7 @@ public class Test1ShotPlayer implements BattleshipsPlayer {
         lastPos = null;
         firePos1 = new ArrayList<>();
         firePos2 = new ArrayList<>();
-        shotIndex = 0;
-        shotIndex2 = 0;
+
 //        decideWhereToStart();
         fillNotYetShot();
         fillShootArrays();
@@ -262,7 +260,8 @@ public class Test1ShotPlayer implements BattleshipsPlayer {
 
     @Override
     public Position getFireCoordinates(Fleet enemyShips) {
-   
+        int shotIndex = 0;
+        int shotIndex2 = 0;
         Position p;
 //  systematicshotplayer
 //        Position shot = new Position(nextX, nextY);
@@ -296,8 +295,8 @@ public class Test1ShotPlayer implements BattleshipsPlayer {
             
             //First shoots from firePos1 then afterwards firePos2
             if (shotIndex <= firePos1.size()) {
-                shot = firePos1.get(shotIndex);
-                shotIndex++;
+                shot = firePos1.get(shotIndex++);
+
                 lastPos = shot;
                 notYetShot.remove(shot);
                 
@@ -309,8 +308,8 @@ public class Test1ShotPlayer implements BattleshipsPlayer {
                 
                     
                 
-                shot = firePos2.get(shotIndex2);
-                shotIndex2++;
+                shot = firePos2.get(shotIndex2++);
+
                 lastPos = shot;
                 notYetShot.remove(shot);
                 
