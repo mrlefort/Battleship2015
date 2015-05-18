@@ -291,14 +291,14 @@ public class Test1ShotPlayer implements BattleshipsPlayer {
         
             // For some reason something is going wrong with this code. Needs to work.
         
-//        if (hunter != null) {
-//            shot = hunter.getShot();
-//            if (hunter.getShot() == null) {
-//
-//                hunter = null;
-//            }
-//
-//        } else {
+        if (hunter != null) {
+            shot = hunter.getShot();
+            if (hunter.getShot() == null) {
+
+                hunter = null;
+            }
+
+        } 
 
 
 //            decideWhereToStart();
@@ -339,6 +339,7 @@ public class Test1ShotPlayer implements BattleshipsPlayer {
                 return p; 
       
     }
+    
 
     @Override
     public void hitFeedBack(boolean hit, Fleet enemyShips) {
